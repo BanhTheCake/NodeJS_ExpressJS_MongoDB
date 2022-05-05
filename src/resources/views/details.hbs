@@ -1,0 +1,19 @@
+<div class="container pt-4">
+  <iframe style="aspect-ratio: 2/1; max-width: 800px;" width="100%" src="https://www.youtube.com/embed/{{data.video_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <form class="mt-4" autocomplete="off" method="POST" action="/edit?_method=PUT">
+  <div class="form-group mb-4">
+    <label for="exampleInputEmail1" class="mb-2">Tên video</label>
+    <input type="text" class="form-control" name="name" value="{{data.name}}">
+  </div>
+  <div class="form-group mb-4">
+    <label for="exampleInputEmail1" class="mb-2">Mô tả</label>
+    <textarea type="text" class="form-control" name="desc" rows="4" style="resize: none;">{{data.desc}}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1" class="mb-2">Video ID</label>
+    <input type="text" class="form-control" name="video_id"  value="{{data.video_id}}">
+  </div>
+  <input type="text" name="id" value="{{data._id}}" hidden>
+  <button class="btn btn-success mt-4 px-8" type="submit">Chỉnh sửa</button>
+</form>
+</div>

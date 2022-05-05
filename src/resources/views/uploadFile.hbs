@@ -1,0 +1,19 @@
+<div class="container pt-4">
+<h3 class="mb-4">UpLoad single file -> <a href="/upload/multi">Switch to multi</a></h3>
+<form class="mb-4" action="/upload-file/create" enctype="multipart/form-data" method="post">
+  <div class="form-group mb-4">
+    <label for="formFile" class="form-label">Chọn File để upload</label>
+    <input class="form-control" type="file" id="formFile" name="uploaded_file">       
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+<div>
+  {{#if data}}
+  <h3>Ảnh đã upload thành công</h3>
+  <img src="/uploads/{{data}}" width="500">
+  {{else}}
+  <h3>Chưa có Ảnh nào được Upload :(</h3>
+  {{/if}}
+</div>
+</div>
+

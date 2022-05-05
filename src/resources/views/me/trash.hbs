@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <table class="table">
+        <thead>
+          {{#if data}}
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Video ID</th>
+                <th scope="col">Action</th>
+            </tr>
+            {{else}}
+          {{/if}}
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{inc @index}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.video_id}}</td>
+                <td>
+                    <a class="btn btn-primary btn-restore" href="/" data-id="{{this._id}}">Khôi phục</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-music" data-bs-id="{{this._id}}">Xóa vĩnh viễn</button></td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="4" class="text-center"><p>Thùng rác trống !!! <a href="/me">quay lại hộp nhạc</a></p></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="delete-music" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Hành động này không thể khôi phục được !! 
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete"  type="button" class="btn btn-danger ">Xóa vĩnh viễn</button>
+        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Hủy bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="delete-form"  method="POST" action=""></form>
+<form name="restore-form"  method="POST" action=""></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const deleteModal = document.getElementById('delete-music')
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget
+        const musicId = button.getAttribute('data-bs-id')
+        const btnDelete = document.getElementById('btn-delete')
+        btnDelete.onclick= function() {
+            const formDelete = document.forms['delete-form'];
+            formDelete.action = `/me/trash/delete/${musicId}?_method=DELETE`;
+            formDelete.submit()
+        }
+        })
+        const restoreBtns = $('.btn-restore')
+        restoreBtns.click(function(e) {
+            e.preventDefault();
+            const restoreId = $(this).data('id');
+            const formRestore = document.forms['restore-form'];
+            formRestore.action = `/me/trash/restore/${restoreId}?_method=PATCH`;
+            formRestore.submit()
+        })
+    })
+</script>
